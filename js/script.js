@@ -3,6 +3,7 @@ const cartArray = [];
 const pack = document.getElementById("pack");
 const children = pack.children;
 const take = document.getElementById("take");
+const take__container = document.getElementById("take__container");
 const addToCart = document.querySelectorAll(".card__button");
 
 class itemCard {
@@ -12,17 +13,18 @@ class itemCard {
     }
 }
 
+// Прячем div пустой корзины
+hide();
+
+// Раздаем индексы карточкам товара в блоке Featured Items
 for (let index = 0; index < children.length; index++) {
     children[index].setAttribute("data-index", index);
 }
 
-console.log(addToCart);
-
+// При клике на карточку товара: если его не было в корзине — добавляем, если был, увеличиваем количество на 1.
 [].forEach.call(addToCart, function (el) {
     el.onclick = function () {
         const parentCard = el.closest(".card");
-        console.log("add");
-        console.log(parentCard.getAttribute("data-index"));
         let cardNumber = parentCard.getAttribute("data-index");
         let probe = findCard(cartArray, cardNumber);
         if (probe === -1) {
@@ -32,12 +34,11 @@ console.log(addToCart);
         if (probe >= 0) {
             cartArray[probe].quantity++;
         }
-
         render();
     };
 });
 
-// Click handler for entire DIV container
+// Добавляем слушатель событий блоку take, так, чтобы он реагировал на клик по созданным в нем объектам cartitem__remove
 take.addEventListener("click", function (e) {
     if (e.target.classList.contains("cartitem__remove")) {
         const card = e.target.getAttribute("data-index");
@@ -53,17 +54,34 @@ take.addEventListener("click", function (e) {
     }
 });
 
+// Перевыводим измененный take
 function render() {
-    take.innerHTML = `
-    <div class="take__header">
-            <h2 class="goods__header">Cart Items</h2>
-    </div>
-    `;
+    hide();
+    take__container.innerHTML = ``;
     cartArray.forEach((element) => {
-        take.innerHTML += cardBuild(element.card, element.quantity);
+        take__container.innerHTML += cardBuild(element.card, element.quantity);
     });
+    take.innerHTML = `
+	    <div class="take__header">
+	        <h2 class="goods__header text__center">Cart Items</h2>
+	    </div>
+	    <div class="take__container">
+	        ${take__container.innerHTML}
+	    </div>
+    `;
 }
 
+// Прячем take, если корзина пуста
+function hide() {
+    if (cartArray.length === 0) {
+        take.style.display = "none";
+    }
+    if (cartArray.length > 0) {
+        take.style.display = "block";
+    }
+}
+
+// Создаем карточку товара
 function cardBuild(number, quantity) {
     number = parseInt(number) + 1;
     let cardHTML = `
@@ -97,6 +115,7 @@ function cardBuild(number, quantity) {
     return cardHTML;
 }
 
+// Ищем товар в корзине
 function findCard(arr, item) {
     return arr.findIndex((e) => e.card === item);
 }

@@ -612,12 +612,19 @@ footer {
 
 .take {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 40px;
+	flex-direction: column;
+	padding-bottom: 96px;
 }
 
 .take__header {
 	margin: 96px auto 64px auto;
+}
+
+.take__container {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 40px;
 }
 
 .cartitem {
