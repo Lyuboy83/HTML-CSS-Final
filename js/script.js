@@ -57,18 +57,20 @@ take.addEventListener("click", function (e) {
 // Перевыводим измененный take
 function render() {
     hide();
+    const sum = countCart(cartArray)
     take__container.innerHTML = ``;
     cartArray.forEach((element) => {
         take__container.innerHTML += cardBuild(element.card, element.quantity);
     });
     take.innerHTML = `
 	    <div class="take__header">
-	        <h2 class="goods__header text__center">Cart Items</h2>
+	        <h2 class="goods__header text__center">Cart Items${sum}</h2>
 	    </div>
 	    <div class="take__container">
 	        ${take__container.innerHTML}
 	    </div>
     `;
+    
 }
 
 // Прячем take, если корзина пуста
@@ -118,4 +120,9 @@ function cardBuild(number, quantity) {
 // Ищем товар в корзине
 function findCard(arr, item) {
     return arr.findIndex((e) => e.card === item);
+}
+
+// Считаем общее количество товаров в корзине
+function countCart(arr) {
+    return arr.reduce((a, b) => a + b.quantity, 0);
 }
