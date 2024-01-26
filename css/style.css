@@ -203,7 +203,7 @@ details[open] .details__box {
 }
 
 .parent__info:after {
-	content: "5";
+	content: attr(count);
 	position: absolute;
 	top: -8px;
 	right: -9px;
@@ -631,6 +631,7 @@ footer {
 	display: flex;
 	width: 550px;
 	box-shadow: 17px 19px 24px rgba(0, 0, 0, 0.13);
+	margin: 0 auto;
 }
 
 .cartitem__imagebox {
@@ -769,6 +770,22 @@ footer {
 	.footer__container {
 		padding-left: 32px;
 		padding-right: 32px;
+	}
+}
+
+@media screen and (max-width: 560px) {
+	.cartitem {
+		display: flex;
+		flex-direction: column;
+		width: 320px;
+	}
+
+	.cartitem__imagebox {
+		width: 100%;
+	}
+
+	.cartitem__box {
+		padding-bottom: 22px;
 	}
 }
 

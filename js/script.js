@@ -2,9 +2,13 @@ const cartArray = [];
 
 const pack = document.getElementById("pack");
 const children = pack.children;
+
 const take = document.getElementById("take");
 const take__container = document.getElementById("take__container");
+
 const addToCart = document.querySelectorAll(".card__button");
+
+const cartCounter = document.getElementById("parent");
 
 class itemCard {
     constructor(card, quantity) {
@@ -57,29 +61,34 @@ take.addEventListener("click", function (e) {
 // Перевыводим измененный take
 function render() {
     hide();
-    const sum = countCart(cartArray)
+    const sum = countCart(cartArray);
     take__container.innerHTML = ``;
     cartArray.forEach((element) => {
         take__container.innerHTML += cardBuild(element.card, element.quantity);
     });
     take.innerHTML = `
 	    <div class="take__header">
-	        <h2 class="goods__header text__center">Cart Items${sum}</h2>
+	        <h2 class="goods__header text__center">Cart Items</h2>
 	    </div>
 	    <div class="take__container">
 	        ${take__container.innerHTML}
 	    </div>
     `;
-    
 }
 
-// Прячем take, если корзина пуста
+// Прячем take и круг с количеством товара на иконке корзины, если корзина пуста
 function hide() {
     if (cartArray.length === 0) {
         take.style.display = "none";
+        // cartCounter.setAttribute("count", 1337);
+        // При трех и более знаках в сумме товаров в корзине число криво сидит в кружке иконки
+        // Вариант: делать кружок дивом, а не псевдоэлементом
+        cartCounter.classList.remove("parent__info");
     }
     if (cartArray.length > 0) {
         take.style.display = "block";
+        cartCounter.setAttribute("count", countCart(cartArray));
+        cartCounter.classList.add("parent__info");
     }
 }
 
