@@ -1,5 +1,15 @@
+// Корзина
 const cartArray = [];
 
+// Элемент корзины (массива cartArray)
+class itemCard {
+    constructor(card, quantity = 1) {
+        this.card = card;
+        this.quantity = quantity;
+    }
+}
+
+// Сбор элементов сайта для обращения к ним
 const pack = document.getElementById("pack");
 const children = pack.children;
 
@@ -9,13 +19,6 @@ const take__container = document.getElementById("take__container");
 const addToCart = document.querySelectorAll(".card__button");
 
 const cartCounter = document.getElementById("parent");
-
-class itemCard {
-    constructor(card, quantity) {
-        this.card = card;
-        this.quantity = 1;
-    }
-}
 
 // Прячем div пустой корзины
 hide();
