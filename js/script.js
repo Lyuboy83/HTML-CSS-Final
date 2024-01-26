@@ -64,7 +64,6 @@ take.addEventListener("click", function (e) {
 // Перевыводим измененный take
 function render() {
     hide();
-    const sum = countCart(cartArray);
     take__container.innerHTML = ``;
     cartArray.forEach((element) => {
         take__container.innerHTML += cardBuild(element.card, element.quantity);
